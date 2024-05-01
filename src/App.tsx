@@ -87,11 +87,16 @@ function App() {
       <progress id="progress" value={count} max={100}></progress>
       <div className="card">
         <span>{count}%</span>
-        {count > 0 && count < 100 && (
+        {count > 0 && runningImport && count < 100 && (
           <span style={{ marginLeft: ".5rem" }}>(In Progess)</span>
         )}
+        {!runningImport && count < 100 && (
+          <span style={{ marginLeft: ".5rem" }}>(Import Cancelled!)</span>
+        )}
         <div>
-          {count < 99 && <button onClick={cancelImport}>Cancel Import</button>}
+          {count < 99 && runningImport && (
+            <button onClick={cancelImport}>Cancel Import</button>
+          )}
           {!runningImport && (
             <button onClick={restartImport}>Restart Import</button>
           )}
