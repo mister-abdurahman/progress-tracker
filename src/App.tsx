@@ -5,7 +5,9 @@ import "./App.css";
 function App() {
   const [count, setCount] = useState(0);
   const fetchInProgress = useRef(false);
-  const [data, setData] = useState(localStorage.getItem("importData") || []);
+  const [data, setData] = useState(
+    JSON.parse(localStorage.getItem("importData")!) || []
+  );
   const [fetchError, setFetchError] = useState<unknown>(null);
   const [runningImport, setRunningImport] = useState(true);
   const [intervalId, setIntervalId] = useState<any>(null);
@@ -113,11 +115,13 @@ function App() {
             padding: ".2rem",
           }}
         >
-          {data.map((item: { title: string; completed: boolean }, key) => (
-            <span key={key}>
-              {item.title} ({item.completed})
-            </span>
-          ))}
+          {data.map(
+            (item: { title: string; completed: boolean }, key: string) => (
+              <span key={key}>
+                {item.title} ({item.completed})
+              </span>
+            )
+          )}
         </div>
       ) : null}
     </div>
